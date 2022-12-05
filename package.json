@@ -1,0 +1,45 @@
+{
+  "name": "wistroni40-crypt",
+  "version": "1.0.0",
+  "description": "Wistron i4.0 Encrypt/Decrypt Utility",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json",
+    "build": "tsc",
+    "test": "jest --config jestconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saivirtue/wistroni40-crypt.git"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "keywords": [
+    "wistroni40",
+    "crypto",
+    "node"
+  ],
+  "author": "Sam CH Cho",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saivirtue/wistroni40-crypt/issues"
+  },
+  "homepage": "https://github.com/saivirtue/wistroni40-crypt#readme",
+  "devDependencies": {
+    "@types/jest": "^29.2.3",
+    "jest": "^29.3.1",
+    "prettier": "^2.8.0",
+    "ts-jest": "^29.0.3",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.9.3"
+  }
+}
