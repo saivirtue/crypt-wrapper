@@ -1,14 +1,15 @@
 {
   "name": "wistroni40-crypt",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Wistron i4.0 Encrypt/Decrypt Utility",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
+    "start": "npm run build && node --openssl-legacy-provider .",
     "build": "tsc",
-    "test": "jest --config jestconfig.json",
+    "test": "export NODE_OPTIONS=--openssl-legacy-provider && jest --config jestconfig.json",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
@@ -33,6 +34,9 @@
     "url": "https://github.com/saivirtue/wistroni40-crypt/issues"
   },
   "homepage": "https://github.com/saivirtue/wistroni40-crypt#readme",
+  "dependencies": {
+    "jasypt": "^1.0.7"
+  },
   "devDependencies": {
     "@types/jest": "^29.2.3",
     "jest": "^29.3.1",
