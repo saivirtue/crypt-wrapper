@@ -1,9 +1,13 @@
 import { Crypt } from '../index';
 
-const crypt = new Crypt();
+let crypt: Crypt;
 
 describe('Performance', () => {
-  test.skip('Print Performance', () => {
+  beforeAll(() => {
+    crypt = new Crypt('simpleKey', 'C0mp!exK$y');
+  });
+
+  test('Print Performance', () => {
     const mockData = {
       id: 37916515,
       status: 35983765,
@@ -57,43 +61,61 @@ describe('Performance', () => {
       'lns_file',
     ];
 
+    let input: any[];
+    let encrypted: any[];
+    let decrypted: any[];
+
     // Case 1: 100
-    let input = Array(100).fill(mockData);
+    input = Array(100).fill(mockData);
     console.time('Case 1: 100 records - encrypt');
-    const encrypted = crypt.encrypt(input, fields);
+    encrypted = crypt.encrypt(input, fields);
     console.timeEnd('Case 1: 100 records - encrypt');
 
     console.time('Case 1: 100 records - decrypt');
-    const decrypted = crypt.decrypt(encrypted, fields);
+    decrypted = crypt.decrypt(encrypted, fields);
     console.timeEnd('Case 1: 100 records - decrypt');
 
     expect(decrypted).toEqual(input);
 
-    // // Case 1: 1,000
-    // input = Array(1000).fill(mockData);
-    // console.time('Case 2: 1,000 records');
-    // crypt.encrypt(input, fields);
-    // console.timeEnd('Case 2: 1,000 records');
+    // Case 2: 1,000
+    input = Array(1000).fill(mockData);
+    console.time('Case 2: 1,000 records - encrypt');
+    encrypted = crypt.encrypt(input, fields);
+    console.timeEnd('Case 2: 1,000 records - encrypt');
 
-    // // Case 1: 100,000
+    console.time('Case 2: 1,000 records - decrypt');
+    decrypted = crypt.decrypt(encrypted, fields);
+    console.timeEnd('Case 2: 1,000 records - decrypt');
+
+    // // Case 3: 100,000
     // input = Array(100000).fill(mockData);
-    // console.time('Case 3: 100,000 records');
-    // crypt.encrypt(input, fields);
-    // console.timeEnd('Case 3: 100,000 records');
+    // console.time('Case 3: 100,000 records - encrypt');
+    // encrypted = crypt.encrypt(input, fields);
+    // console.timeEnd('Case 3: 100,000 records - encrypt');
+
+    // console.time('Case 3: 100,000 records - decrypt');
+    // decrypted = crypt.decrypt(encrypted, fields);
+    // console.timeEnd('Case 3: 100,000 records - decrypt');
   });
 });
 
-describe('Encrypt', () => {
-  test('encrypt simple sting array', () => {
+describe('Encrypt/Decrypt without specific key', () => {
+  beforeAll(() => {
+    crypt = new Crypt();
+  });
+
+  test('simple sting array', () => {
     // given
     const data = ['a', 'b', 'foo'];
 
     // when
     const result = crypt.encrypt(data);
+    const decryptResult = crypt.decrypt(result);
 
     // then
     expect(result).toHaveLength(data.length);
     expect(result).not.toEqual(data); // encrypted result should be different to original data
+    expect(decryptResult).toEqual(data);
   });
 
   test('encrypt simple sting array with assigned fields has no effect', () => {
@@ -101,12 +123,14 @@ describe('Encrypt', () => {
     const data = ['a', 'b', 'foo'];
 
     // when
-    const origin = crypt.encrypt(data);
-    const result = crypt.encrypt(data, ['a', 'b', 'bar']);
+    const withoutFieldResult = crypt.encrypt(data);
+    const withoutFieldOrigin = crypt.decrypt(withoutFieldResult);
+    const withFieldResult = crypt.encrypt(data, ['a', 'b', 'bar']);
+    const withFieldOrigin = crypt.decrypt(withFieldResult, ['a', 'b', 'bar']);
 
     // then
-    expect(result).toHaveLength(data.length);
-    expect(origin).toEqual(result);
+    expect(withoutFieldOrigin).toHaveLength(withFieldOrigin.length);
+    expect(withoutFieldOrigin).toEqual(withFieldOrigin);
   });
 
   test('encrypt complex object instances', () => {
@@ -141,13 +165,14 @@ describe('Encrypt', () => {
 
     // when
     const result = crypt.encrypt(data);
+    const decryptResult = crypt.decrypt(result);
 
     // then
-    //TODO recursive loop the data (most refactor the index.ts recusive function first)
     expect(result[0].aNumber).toBe(data[0].aNumber);
     expect(result[1].status).toBe(data[1].status);
     expect(result[1].meta?.header).not.toEqual(data[1].meta?.header);
     expect(result[1].data?.[0].supported).not.toEqual(data[1].data?.[0].supported);
+    expect(decryptResult).toEqual(data);
   });
 
   test('encrypt complex object instances with specific fields', () => {
@@ -182,14 +207,151 @@ describe('Encrypt', () => {
 
     // when
     const result = crypt.encrypt(data, ['meta.header', 'data.message']);
+    const decryptResult = crypt.decrypt(result, ['meta.header', 'data.message']);
 
     // then
-    //TODO recursive loop the data (most refactor the index.ts recusive function first)
     expect(result[0].aNumber).toBe(data[0].aNumber);
     expect(result[1].status).toBe(data[1].status);
     expect(result[1].meta?.header).not.toEqual(data[1].meta?.header);
     expect(result[1].meta?.filename).toEqual(data[1].meta?.filename);
     expect(result[1].data?.[0].supported).toEqual(data[1].data?.[0].supported);
     expect(result[1].data?.[1].message).not.toEqual(data[1].data?.[1].message);
+    expect(decryptResult).toEqual(data);
+  });
+});
+
+describe('Encrypt/Decrypt with backend and infra keys', () => {
+  beforeAll(() => {
+    crypt = new Crypt('fakeKey', 'AkeyMock');
+  });
+
+  test('encrypt simple sting array', () => {
+    // given
+    const data = ['a', 'b', 'foo'];
+
+    // when
+    const result = crypt.encrypt(data);
+    const decryptResult = crypt.decrypt(result);
+
+    // then
+    expect(result).toHaveLength(data.length);
+    expect(result).not.toEqual(data); // encrypted result should be different to original data
+    expect(decryptResult).toEqual(data);
+  });
+
+  test('encrypt simple sting array with assigned fields has no effect', () => {
+    // given
+    const data = ['a', 'b', 'foo'];
+
+    // when
+    const withoutFieldResult = crypt.encrypt(data);
+    const withoutFieldOrigin = crypt.decrypt(withoutFieldResult);
+    const withFieldResult = crypt.encrypt(data, ['a', 'b', 'bar']);
+    const withFieldOrigin = crypt.decrypt(withFieldResult, ['a', 'b', 'bar']);
+
+    // then
+    expect(withoutFieldOrigin).toHaveLength(withFieldOrigin.length);
+    expect(withoutFieldOrigin).toEqual(withFieldOrigin);
+  });
+
+  test('encrypt complex object instances', () => {
+    // given
+    const data = [
+      {
+        aNumber: 123123,
+      },
+      {
+        status: 200,
+        meta: {
+          header: 'text/plain',
+          ssl: true,
+          filename: 'test',
+        },
+        data: [
+          {
+            code: 1,
+            isActivity: false,
+            message: 'hello from there',
+            supported: ['typeA', 'typeB'],
+          },
+          {
+            code: 2,
+            isActivity: true,
+            message: 'hello from there',
+            supported: ['typeA', 'typeC'],
+          },
+        ],
+      },
+    ];
+
+    // when
+    const result = crypt.encrypt(data);
+    const decryptResult = crypt.decrypt(result);
+
+    // then
+    expect(result[0].aNumber).toBe(data[0].aNumber);
+    expect(result[1].status).toBe(data[1].status);
+    expect(result[1].meta?.header).not.toEqual(data[1].meta?.header);
+    expect(result[1].data?.[0].supported).not.toEqual(data[1].data?.[0].supported);
+    expect(decryptResult).toEqual(data);
+  });
+
+  test('encrypt complex object instances with specific fields', () => {
+    // given
+    const data = [
+      {
+        aNumber: 123123,
+      },
+      {
+        status: 200,
+        meta: {
+          header: 'text/plain',
+          ssl: true,
+          filename: 'test',
+        },
+        data: [
+          {
+            code: 1,
+            isActivity: false,
+            message: 'hello from there',
+            supported: ['typeA', 'typeB'],
+          },
+          {
+            code: 2,
+            isActivity: true,
+            message: 'hello from there',
+            supported: ['typeA', 'typeC'],
+          },
+        ],
+      },
+    ];
+
+    // when
+    const result = crypt.encrypt(data, ['meta.header', 'data.message']);
+    const decryptResult = crypt.decrypt(result, ['meta.header', 'data.message']);
+
+    // then
+    expect(result[0].aNumber).toBe(data[0].aNumber);
+    expect(result[1].status).toBe(data[1].status);
+    expect(result[1].meta?.header).not.toEqual(data[1].meta?.header);
+    expect(result[1].meta?.filename).toEqual(data[1].meta?.filename);
+    expect(result[1].data?.[0].supported).toEqual(data[1].data?.[0].supported);
+    expect(result[1].data?.[1].message).not.toEqual(data[1].data?.[1].message);
+    expect(decryptResult).toEqual(data);
+  });
+
+  test('unrecognized encrypted data could not be decrypted', () => {
+    // given
+    const anotherCrypt = new Crypt();
+    const data = [{ bar: 'foo' }];
+
+    // when
+    const encryptedData = anotherCrypt.encrypt(data);
+    const decryptResult = crypt.decrypt(encryptedData);
+
+    // then
+    expect(decryptResult).toHaveLength(1);
+    expect(decryptResult[0]).toHaveProperty('bar');
+    expect(decryptResult[0].bar).toEqual('');
   });
 });

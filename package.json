@@ -35,9 +35,14 @@
   },
   "homepage": "https://github.com/saivirtue/wistroni40-crypt#readme",
   "dependencies": {
-    "jasypt": "^1.0.7"
+    "crypto-js": "^4.1.1"
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": ">=16.0.0"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
     "@types/jest": "^29.2.3",
     "jest": "^29.3.1",
     "prettier": "^2.8.0",

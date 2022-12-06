@@ -1,4 +1,4 @@
-function hierarchyFields(fields: string[] | undefined) {
+function hierarchyFields(fields?: string[]) {
   if (!fields) return undefined;
   const extractedFields = [];
   for (const field of fields) {
@@ -19,11 +19,11 @@ export function isString(obj: any) {
   return typeof obj === 'string' || obj instanceof String;
 }
 
-export function traverseObj(obj: any, fields: string[] | undefined, fn: (obj: Object) => any) {
-  if (!isObj(obj)) {
+export function traverseObj(obj: any, fn: (input: string) => string, fields?: string[]) {
+  if (isString(obj)) {
     return fn(obj);
   }
-  let returnObject = structuredClone(obj);
+  const returnObject = structuredClone(obj);
   for (const key in obj) {
     // check if the fields was defined AND no matched fields in data
     if (!!fields && fields.every((field) => !field.startsWith(key))) {
@@ -35,14 +35,14 @@ export function traverseObj(obj: any, fields: string[] | undefined, fn: (obj: Ob
 
     const value = obj[key];
     if (isObj(value)) {
-      returnObject[key] = traverseObj(value, hierarchyFields(fields), fn);
+      returnObject[key] = traverseObj(value, fn, hierarchyFields(fields));
     } else if (isString(value)) {
       const decryptedValue = fn(value);
       returnObject[key] = decryptedValue;
     } else if (isArray(value)) {
-      let decryptedArray: any[] = [];
+      const decryptedArray: any[] = [];
       for (const item of value) {
-        decryptedArray.push(traverseObj(item, hierarchyFields(fields), fn));
+        decryptedArray.push(traverseObj(item, fn, hierarchyFields(fields)));
       }
       returnObject[key] = decryptedArray;
     }
