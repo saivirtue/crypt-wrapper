@@ -103,3 +103,7 @@ const array = [
 const cryptedData = cryptor.encrypt(array, ['bar']);
 array === cryptor.decrypt(cryptedData, ['bar']); // true
 ```
+
+# contributors
+
+![contributors](https://contrib.rocks/image?repo=saivirtue/wistroni40-crypt)
