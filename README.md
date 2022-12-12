@@ -1,3 +1,8 @@
+![Repo Version](https://img.shields.io/github/package-json/v/saivirtue/wistroni40-crypt)
+![License](https://img.shields.io/github/license/saivirtue/wistroni40-crypt)
+![Node Version](https://img.shields.io/node/v/wistroni40-crypt)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/saivirtue/wistroni40-crypt/Node.js%20CI)
+
 # Wistron i4.0 Crypto Utility
 
 This is a wrapper encryption utility of [crypto-js](https://www.npmjs.com/package/crypto-js).
