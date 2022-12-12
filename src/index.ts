@@ -1,10 +1,9 @@
 import { createHash } from 'crypto';
-import { decrypt as dec, encrypt as enc } from './cryptor';
-import { traverseObj } from './utils';
+import { decrypt as dec, encrypt as enc, traverseObj } from './utils';
 
-export class Crypt {
+export class Cryptor {
   /**
-   * 建立Crypt類別物件.
+   * 建立Cryptor類別物件.
    *
    * 注意: 預設會有一把金鑰可以用來測試，但在生產環境中，你應該提供兩把金鑰
    *

@@ -1,10 +1,10 @@
-import { Crypt } from '../index';
+import { Cryptor } from '../index';
 
-let crypt: Crypt;
+let cryptor: Cryptor;
 
-describe('Performance', () => {
+describe.skip('Performance (For Testing purpose)', () => {
   beforeAll(() => {
-    crypt = new Crypt('simpleKey', 'C0mp!exK$y');
+    cryptor = new Cryptor('simpleKey', 'C0mp!exK$y');
   });
 
   test('Print Performance', () => {
@@ -68,11 +68,11 @@ describe('Performance', () => {
     // Case 1: 100
     input = Array(100).fill(mockData);
     console.time('Case 1: 100 records - encrypt');
-    encrypted = crypt.encrypt(input, fields);
+    encrypted = cryptor.encrypt(input, fields);
     console.timeEnd('Case 1: 100 records - encrypt');
 
     console.time('Case 1: 100 records - decrypt');
-    decrypted = crypt.decrypt(encrypted, fields);
+    decrypted = cryptor.decrypt(encrypted, fields);
     console.timeEnd('Case 1: 100 records - decrypt');
 
     expect(decrypted).toEqual(input);
@@ -80,28 +80,28 @@ describe('Performance', () => {
     // Case 2: 1,000
     input = Array(1000).fill(mockData);
     console.time('Case 2: 1,000 records - encrypt');
-    encrypted = crypt.encrypt(input, fields);
+    encrypted = cryptor.encrypt(input, fields);
     console.timeEnd('Case 2: 1,000 records - encrypt');
 
     console.time('Case 2: 1,000 records - decrypt');
-    decrypted = crypt.decrypt(encrypted, fields);
+    decrypted = cryptor.decrypt(encrypted, fields);
     console.timeEnd('Case 2: 1,000 records - decrypt');
 
     // // Case 3: 100,000
-    // input = Array(100000).fill(mockData);
-    // console.time('Case 3: 100,000 records - encrypt');
-    // encrypted = crypt.encrypt(input, fields);
-    // console.timeEnd('Case 3: 100,000 records - encrypt');
+    input = Array(100000).fill(mockData);
+    console.time('Case 3: 100,000 records - encrypt');
+    encrypted = cryptor.encrypt(input, fields);
+    console.timeEnd('Case 3: 100,000 records - encrypt');
 
-    // console.time('Case 3: 100,000 records - decrypt');
-    // decrypted = crypt.decrypt(encrypted, fields);
-    // console.timeEnd('Case 3: 100,000 records - decrypt');
+    console.time('Case 3: 100,000 records - decrypt');
+    decrypted = cryptor.decrypt(encrypted, fields);
+    console.timeEnd('Case 3: 100,000 records - decrypt');
   });
 });
 
 describe('Encrypt/Decrypt without specific key', () => {
   beforeAll(() => {
-    crypt = new Crypt();
+    cryptor = new Cryptor();
   });
 
   test('simple sting array', () => {
@@ -109,8 +109,8 @@ describe('Encrypt/Decrypt without specific key', () => {
     const data = ['a', 'b', 'foo'];
 
     // when
-    const result = crypt.encrypt(data);
-    const decryptResult = crypt.decrypt(result);
+    const result = cryptor.encrypt(data);
+    const decryptResult = cryptor.decrypt(result);
 
     // then
     expect(result).toHaveLength(data.length);
@@ -123,10 +123,10 @@ describe('Encrypt/Decrypt without specific key', () => {
     const data = ['a', 'b', 'foo'];
 
     // when
-    const withoutFieldResult = crypt.encrypt(data);
-    const withoutFieldOrigin = crypt.decrypt(withoutFieldResult);
-    const withFieldResult = crypt.encrypt(data, ['a', 'b', 'bar']);
-    const withFieldOrigin = crypt.decrypt(withFieldResult, ['a', 'b', 'bar']);
+    const withoutFieldResult = cryptor.encrypt(data);
+    const withoutFieldOrigin = cryptor.decrypt(withoutFieldResult);
+    const withFieldResult = cryptor.encrypt(data, ['a', 'b', 'bar']);
+    const withFieldOrigin = cryptor.decrypt(withFieldResult, ['a', 'b', 'bar']);
 
     // then
     expect(withoutFieldOrigin).toHaveLength(withFieldOrigin.length);
@@ -164,8 +164,8 @@ describe('Encrypt/Decrypt without specific key', () => {
     ];
 
     // when
-    const result = crypt.encrypt(data);
-    const decryptResult = crypt.decrypt(result);
+    const result = cryptor.encrypt(data);
+    const decryptResult = cryptor.decrypt(result);
 
     // then
     expect(result[0].aNumber).toBe(data[0].aNumber);
@@ -206,8 +206,8 @@ describe('Encrypt/Decrypt without specific key', () => {
     ];
 
     // when
-    const result = crypt.encrypt(data, ['meta.header', 'data.message']);
-    const decryptResult = crypt.decrypt(result, ['meta.header', 'data.message']);
+    const result = cryptor.encrypt(data, ['meta.header', 'data.message']);
+    const decryptResult = cryptor.decrypt(result, ['meta.header', 'data.message']);
 
     // then
     expect(result[0].aNumber).toBe(data[0].aNumber);
@@ -222,7 +222,7 @@ describe('Encrypt/Decrypt without specific key', () => {
 
 describe('Encrypt/Decrypt with backend and infra keys', () => {
   beforeAll(() => {
-    crypt = new Crypt('fakeKey', 'AkeyMock');
+    cryptor = new Cryptor('fakeKey', 'AkeyMock');
   });
 
   test('encrypt simple sting array', () => {
@@ -230,8 +230,8 @@ describe('Encrypt/Decrypt with backend and infra keys', () => {
     const data = ['a', 'b', 'foo'];
 
     // when
-    const result = crypt.encrypt(data);
-    const decryptResult = crypt.decrypt(result);
+    const result = cryptor.encrypt(data);
+    const decryptResult = cryptor.decrypt(result);
 
     // then
     expect(result).toHaveLength(data.length);
@@ -244,10 +244,10 @@ describe('Encrypt/Decrypt with backend and infra keys', () => {
     const data = ['a', 'b', 'foo'];
 
     // when
-    const withoutFieldResult = crypt.encrypt(data);
-    const withoutFieldOrigin = crypt.decrypt(withoutFieldResult);
-    const withFieldResult = crypt.encrypt(data, ['a', 'b', 'bar']);
-    const withFieldOrigin = crypt.decrypt(withFieldResult, ['a', 'b', 'bar']);
+    const withoutFieldResult = cryptor.encrypt(data);
+    const withoutFieldOrigin = cryptor.decrypt(withoutFieldResult);
+    const withFieldResult = cryptor.encrypt(data, ['a', 'b', 'bar']);
+    const withFieldOrigin = cryptor.decrypt(withFieldResult, ['a', 'b', 'bar']);
 
     // then
     expect(withoutFieldOrigin).toHaveLength(withFieldOrigin.length);
@@ -285,8 +285,8 @@ describe('Encrypt/Decrypt with backend and infra keys', () => {
     ];
 
     // when
-    const result = crypt.encrypt(data);
-    const decryptResult = crypt.decrypt(result);
+    const result = cryptor.encrypt(data);
+    const decryptResult = cryptor.decrypt(result);
 
     // then
     expect(result[0].aNumber).toBe(data[0].aNumber);
@@ -327,8 +327,8 @@ describe('Encrypt/Decrypt with backend and infra keys', () => {
     ];
 
     // when
-    const result = crypt.encrypt(data, ['meta.header', 'data.message']);
-    const decryptResult = crypt.decrypt(result, ['meta.header', 'data.message']);
+    const result = cryptor.encrypt(data, ['meta.header', 'data.message']);
+    const decryptResult = cryptor.decrypt(result, ['meta.header', 'data.message']);
 
     // then
     expect(result[0].aNumber).toBe(data[0].aNumber);
@@ -342,12 +342,12 @@ describe('Encrypt/Decrypt with backend and infra keys', () => {
 
   test('unrecognized encrypted data could not be decrypted', () => {
     // given
-    const anotherCrypt = new Crypt();
+    const anotherCrypt = new Cryptor();
     const data = [{ bar: 'foo' }];
 
     // when
     const encryptedData = anotherCrypt.encrypt(data);
-    const decryptResult = crypt.decrypt(encryptedData);
+    const decryptResult = cryptor.decrypt(encryptedData);
 
     // then
     expect(decryptResult).toHaveLength(1);

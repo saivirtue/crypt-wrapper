@@ -1,2 +1,5 @@
 node_modules
 /lib
+*.py
+__pycache__
+simple_server
