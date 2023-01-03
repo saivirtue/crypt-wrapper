@@ -1,7 +1,7 @@
 ![Repo Version](https://img.shields.io/github/package-json/v/saivirtue/wistroni40-crypt)
 ![License](https://img.shields.io/github/license/saivirtue/wistroni40-crypt)
 ![Node Version](https://img.shields.io/node/v/wistroni40-crypt)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/saivirtue/wistroni40-crypt/Node.js%20CI)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/saivirtue/wistroni40-crypt/node.js.yml)
 
 # Wistron i4.0 Crypto Utility
 
