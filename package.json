@@ -7,9 +7,9 @@
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
-    "start": "npm run build && node --openssl-legacy-provider .",
+    "start": "npm run build && node .",
     "build": "tsc",
-    "test": "cross-env NODE_OPTIONS=--openssl-legacy-provider jest --config jestconfig.json --verbose",
+    "test": "cross-env jest --config jestconfig.json --verbose",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
