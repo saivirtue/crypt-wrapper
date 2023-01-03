@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import { cloneDeep } from 'lodash';
 
 function hierarchyFields(fields?: string[]) {
   if (!fields) return undefined;
@@ -25,7 +26,7 @@ export function traverseObj(obj: any, fn: (input: string) => string, fields?: st
   if (isString(obj)) {
     return fn(obj);
   }
-  const returnObject = structuredClone(obj);
+  const returnObject = cloneDeep(obj);
   for (const key in obj) {
     // check if the fields was defined AND no matched fields in data
     if (!!fields && fields.every((field) => !field.startsWith(key))) {
