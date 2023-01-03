@@ -9,7 +9,7 @@
     "lint": "tslint -p tsconfig.json",
     "start": "npm run build && node --openssl-legacy-provider .",
     "build": "tsc",
-    "test": "cross-env NODE_OPTIONS=--openssl-legacy-provider jest --config jestconfig.json",
+    "test": "cross-env NODE_OPTIONS=--openssl-legacy-provider jest --config jestconfig.json --verbose",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
@@ -42,9 +42,6 @@
     "crypto-js": "^4.1.1"
   },
   "engineStrict": true,
-  "engines": {
-    "node": ">=17.0.0"
-  },
   "devDependencies": {
     "@types/crypto-js": "^4.1.1",
     "@types/jest": "^29.2.3",

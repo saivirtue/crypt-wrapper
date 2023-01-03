@@ -66,26 +66,29 @@ describe.skip('Performance (For Testing purpose)', () => {
     let decrypted: any[];
 
     // Case 1: 100
-    input = Array(100).fill(mockData);
-    console.time('Case 1: 100 records - encrypt');
-    encrypted = cryptor.encrypt(input, fields);
-    console.timeEnd('Case 1: 100 records - encrypt');
+    for (let i = 0; i < 10; i++) {
+      input = Array(100).fill(mockData);
+      console.time('Case 1: 100 records - encrypt');
+      encrypted = cryptor.encrypt(input, fields);
+      console.timeEnd('Case 1: 100 records - encrypt');
 
-    console.time('Case 1: 100 records - decrypt');
-    decrypted = cryptor.decrypt(encrypted, fields);
-    console.timeEnd('Case 1: 100 records - decrypt');
-
-    expect(decrypted).toEqual(input);
+      console.time('Case 1: 100 records - decrypt');
+      decrypted = cryptor.decrypt(encrypted, fields);
+      console.timeEnd('Case 1: 100 records - decrypt');
+      expect(decrypted).toEqual(input);
+    }
 
     // Case 2: 1,000
-    input = Array(1000).fill(mockData);
-    console.time('Case 2: 1,000 records - encrypt');
-    encrypted = cryptor.encrypt(input, fields);
-    console.timeEnd('Case 2: 1,000 records - encrypt');
+    for (let i = 0; i < 10; i++) {
+      input = Array(1000).fill(mockData);
+      console.time('Case 2: 1,000 records - encrypt');
+      encrypted = cryptor.encrypt(input, fields);
+      console.timeEnd('Case 2: 1,000 records - encrypt');
 
-    console.time('Case 2: 1,000 records - decrypt');
-    decrypted = cryptor.decrypt(encrypted, fields);
-    console.timeEnd('Case 2: 1,000 records - decrypt');
+      console.time('Case 2: 1,000 records - decrypt');
+      decrypted = cryptor.decrypt(encrypted, fields);
+      console.timeEnd('Case 2: 1,000 records - decrypt');
+    }
 
     // // Case 3: 100,000
     input = Array(100000).fill(mockData);
