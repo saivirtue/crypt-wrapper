@@ -29,7 +29,7 @@ export function traverseObj(obj: any, fn: (input: string) => string, fields?: st
   const returnObject = cloneDeep(obj);
   for (const key in obj) {
     // check if the fields was defined AND no matched fields in data
-    if (!!fields && fields.every((field) => !field.startsWith(key))) {
+    if (!!fields && fields.every((field) => (field.includes('.') ? !field.startsWith(key) : field !== key))) {
       continue;
     }
     if (!obj.hasOwnProperty(key)) {
