@@ -74,11 +74,16 @@ export function encrypt(input: string, secret: string) {
 }
 
 export function decrypt(input: string, secret: string) {
-  const key = key256bits(secret, CryptoJS.enc.Hex.parse(input.substring(0, 32)));
-  const decrypted = CryptoJS.AES.decrypt(
-    input.substring(64),
-    key,
-    cipherOption(CryptoJS.enc.Hex.parse(input.substring(32, 64))),
-  );
-  return decrypted.toString(CryptoJS.enc.Utf8);
+  try {
+    const key = key256bits(secret, CryptoJS.enc.Hex.parse(input.substring(0, 32)));
+    const decrypted = CryptoJS.AES.decrypt(
+      input.substring(64),
+      key,
+      cipherOption(CryptoJS.enc.Hex.parse(input.substring(32, 64))),
+    );
+    return decrypted.toString(CryptoJS.enc.Utf8);
+  } catch {
+    // swallow exception and just return empty
+    return '';
+  }
 }

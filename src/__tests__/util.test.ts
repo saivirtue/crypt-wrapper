@@ -1,4 +1,4 @@
-import { isArray, isObj, isString } from '../utils';
+import { decrypt, isArray, isObj, isString } from '../utils';
 
 describe('Utility', () => {
   test('test is object', () => {
@@ -38,5 +38,15 @@ describe('Utility', () => {
     expect(isString([])).toBeFalsy();
     expect(isString(true)).toBeFalsy();
     expect(isString(() => {})).toBeFalsy();
+  });
+
+  test('empty string could be decrypt', () => {
+    expect(decrypt('', 'abc123')).toBe('');
+    expect(decrypt(' ', 'abc123')).toBe('');
+  });
+
+  test('unexpected string could be decrypt', () => {
+    expect(decrypt('xxxxfff', 'abc123')).toBe('');
+    expect(decrypt('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9', 'abc123')).toBe('');
   });
 });
