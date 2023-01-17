@@ -32,7 +32,7 @@
     "node"
   ],
   "author": "Sam CH Cho",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/saivirtue/wistroni40-crypt/issues"
   },
