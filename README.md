@@ -11,7 +11,7 @@ This is a wrapper encryption utility of [crypto-js](https://www.npmjs.com/packag
 - [Encrypt](#encrypt)
 - [Decrypt](#decrypt)
 
-# Quick Start
+## Quick Start
 
 1. Install package
 
@@ -29,7 +29,7 @@ const data = { simple: 'data' };
 [data] === cryptor.decrypt(cryptor.encrypt([data])); // true
 ```
 
-# Encrypt
+## Encrypt
 
 ```js
 import { Cryptor } from 'wistroni40-crypt';
@@ -74,7 +74,7 @@ cryptedData[0].bar === 'foo'; // true
 cryptedData[0].nested.hi !== 'i am here'; // true
 ```
 
-# Decrypt
+## Decrypt
 
 ```js
 import { Cryptor } from 'wistroni40-crypt';
@@ -104,6 +104,10 @@ const cryptedData = cryptor.encrypt(array, ['bar']);
 array === cryptor.decrypt(cryptedData, ['bar']); // true
 ```
 
-# contributors
+## contributors
 
 ![contributors](https://contrib.rocks/image?repo=saivirtue/wistroni40-crypt)
+
+## License
+
+MIT
