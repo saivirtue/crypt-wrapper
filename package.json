@@ -1,7 +1,7 @@
 {
-  "name": "wistroni40-crypt",
+  "name": "crypt-wrapper",
   "version": "1.0.10",
-  "description": "Wistron i4.0 Encrypt/Decrypt Utility",
+  "description": "Encrypt/Decrypt Wrapper Utility",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -21,22 +21,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saivirtue/wistroni40-crypt.git"
+    "url": "git+https://github.com/saivirtue/crypt-wrapper.git"
   },
   "files": [
     "lib/**/*"
   ],
   "keywords": [
-    "wistroni40",
     "crypto",
     "node"
   ],
   "author": "Sam CH Cho",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/saivirtue/wistroni40-crypt/issues"
+    "url": "https://github.com/saivirtue/crypt-wrapper/issues"
   },
-  "homepage": "https://github.com/saivirtue/wistroni40-crypt#readme",
+  "homepage": "https://github.com/saivirtue/crypt-wrapper#readme",
   "dependencies": {
     "cross-env": "^7.0.3",
     "crypto-js": "^4.1.1",
