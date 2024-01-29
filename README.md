@@ -1,9 +1,9 @@
-![Repo Version](https://img.shields.io/github/package-json/v/saivirtue/wistroni40-crypt)
-![License](https://img.shields.io/github/license/saivirtue/wistroni40-crypt)
-![Node Version](https://img.shields.io/node/v/wistroni40-crypt)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/saivirtue/wistroni40-crypt/node.js.yml)
+![Repo Version](https://img.shields.io/github/package-json/v/saivirtue/crypt-wrapper)
+![License](https://img.shields.io/github/license/saivirtue/crypt-wrapper)
+![Node Version](https://img.shields.io/node/v/crypt-wrapper)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/saivirtue/crypt-wrapper/node.js.yml)
 
-# Wistron i4.0 Crypto Utility
+# Crypto Wrapper Utility
 
 This is a wrapper encryption utility of [crypto-js](https://www.npmjs.com/package/crypto-js).
 
@@ -16,13 +16,13 @@ This is a wrapper encryption utility of [crypto-js](https://www.npmjs.com/packag
 1. Install package
 
 ```bash
-> npm i wistroni40-crypt
+> npm i crypt-wrapper
 ```
 
 2. Simple Usage
 
 ```js
-import { Cryptor } from 'wistroni40-crypt';
+import { Cryptor } from 'crypt-wrapper';
 
 const cryptor = new Cryptor();
 const data = { simple: 'data' };
@@ -32,7 +32,7 @@ const data = { simple: 'data' };
 ## Encrypt
 
 ```js
-import { Cryptor } from 'wistroni40-crypt';
+import { Cryptor } from 'crypt-wrapper';
 
 // 使用預設的金鑰來測試 (只會加密一次)
 // const cryptor = new Cryptor();
@@ -77,7 +77,7 @@ cryptedData[0].nested.hi !== 'i am here'; // true
 ## Decrypt
 
 ```js
-import { Cryptor } from 'wistroni40-crypt';
+import { Cryptor } from 'crypt-wrapper';
 
 const cryptor = new Cryptor('@PreV_k$y', '@P0sT_k$y');
 
@@ -106,7 +106,7 @@ array === cryptor.decrypt(cryptedData, ['bar']); // true
 
 ## contributors
 
-![contributors](https://contrib.rocks/image?repo=saivirtue/wistroni40-crypt)
+![contributors](https://contrib.rocks/image?repo=saivirtue/crypt-wrapper)
 
 ## License
 
