@@ -4,6 +4,9 @@
   "description": "Encrypt/Decrypt Wrapper Utility",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "engines": {
+    "node": "^16.10.0 || ^18.0.0"
+  },
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
