@@ -1,6 +1,6 @@
 ![Repo Version](https://img.shields.io/github/package-json/v/saivirtue/crypt-wrapper)
 ![License](https://img.shields.io/github/license/saivirtue/crypt-wrapper)
-![NPM](https://img.shields.io/npm/v/crypt-wrapper)
+![Node version](https://img.shields.io/node/v/crypt-wrapper)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/saivirtue/crypt-wrapper/node.js.yml)
 
 # Crypto Wrapper Utility
